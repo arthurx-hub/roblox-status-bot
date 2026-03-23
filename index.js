@@ -1,5 +1,5 @@
 ﻿require("dotenv").config();
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js'); // correct v14 import
 const axios = require('axios');
 
 const client = new Client({
@@ -80,7 +80,7 @@ client.once("ready", async () => {
     } catch (err) {
       console.error(err);
     }
-  }, 3000); // every 3 seconds
+  }, 5000); // every 5 seconds
 });
 
 client.login(TOKEN);
