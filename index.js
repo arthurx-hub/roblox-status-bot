@@ -67,33 +67,31 @@ client.once("ready", async () => {
   let message = await channel.send("Loading Roblox statuses...");
 
   setInterval(async () => {
-    try {
-      const data = await getPresence(users.map(u => u.id));
+  try {
+    const data = await getPresence(users.map(u => u.id));
 
-      const embed = new EmbedBuilder()
-        .setTitle("🎮 Roblox Player Status")
-        .setColor(0x1abc9c)
+    // Create one embed per user
+    const embeds = users.map(user => {
+      const presence = data.find(p => p.userId === user.id);
+      const emoji = presence ? getStatusEmoji(presence.userPresenceType) : "🔴";
+
+      const avatarUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=48&height=48&format=png`;
+
+      return new EmbedBuilder()
+        .setTitle(`${emoji} ${user.name}`)
+        .setThumbnail(avatarUrl)
+        .setColor(0x1abc9c) // teal color
         .setTimestamp()
         .setFooter({ text: "Updated every 8 seconds" });
+    });
 
-      users.forEach(user => {
-        const presence = data.find(p => p.userId === user.id);
-        const emoji = presence ? getStatusEmoji(presence.userPresenceType) : "🔴";
-        const avatarUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=48&height=48&format=png`;
+    // Edit the original message with all embeds
+    await message.edit({ embeds });
 
-        embed.addFields([{
-          name: `${emoji} ${user.name}`,
-          value: `[Avatar](${avatarUrl})`,
-          inline: true
-        }]);
-      });
-
-      await message.edit({ embeds: [embed] });
-
-    } catch (err) {
-      console.error(err);
-    }
-  }, 8000);
+  } catch (err) {
+    console.error(err);
+  }
+}, 8000); // every 8 seconds
 });
 
 // LOGIN OUTSIDE
