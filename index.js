@@ -64,46 +64,37 @@ client.once("ready", async () => {
 
   const channel = await client.channels.fetch(CHANNEL_ID);
 
-  // Send initial placeholder message
-let message = await channel.send({ content: "Loading Roblox statuses..." });
+  let message = await channel.send("Loading Roblox statuses...");
 
-setInterval(async () => {
-  try {
-    const data = await getPresence(users.map(u => u.id));
+  setInterval(async () => {
+    try {
+      const data = await getPresence(users.map(u => u.id));
 
-    // Build embed
-    const embed = new EmbedBuilder()
-      .setTitle("🎮 Roblox Player Status")
-      .setColor(0x1abc9c) // teal color
-      .setTimestamp()
-      .setFooter({ text: "Updated every 8 seconds" });
+      const embed = new EmbedBuilder()
+        .setTitle("🎮 Roblox Player Status")
+        .setColor(0x1abc9c)
+        .setTimestamp()
+        .setFooter({ text: "Updated every 8 seconds" });
 
-    // Add each user as a separate field with avatar and emoji
-    users.forEach(user => {
-      const presence = data.find(p => p.userId === user.id);
-      const emoji = presence ? getStatusEmoji(presence.userPresenceType) : "🔴";
+      users.forEach(user => {
+        const presence = data.find(p => p.userId === user.id);
+        const emoji = presence ? getStatusEmoji(presence.userPresenceType) : "🔴";
+        const avatarUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=48&height=48&format=png`;
 
-      // Roblox thumbnail URL (small avatar headshot)
-      const avatarUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=48&height=48&format=png`;
-
-      embed.addFields([
-        {
+        embed.addFields([{
           name: `${emoji} ${user.name}`,
-          value: '\u200b', // empty field to avoid clutter
+          value: `[Avatar](${avatarUrl})`,
           inline: true
-        }
-      ]);
+        }]);
+      });
 
-      // Attach the avatar image for this field
-      embed.setThumbnail(avatarUrl); // will update per user in loop
-    });
+      await message.edit({ embeds: [embed] });
 
-    // Edit the message with the embed
-    await message.edit({ embeds: [embed] });
+    } catch (err) {
+      console.error(err);
+    }
+  }, 8000);
+});
 
-  } catch (err) {
-    console.error(err);
-  }
-}, 8000); // every 8 seconds
-
+// LOGIN OUTSIDE
 client.login(TOKEN);
