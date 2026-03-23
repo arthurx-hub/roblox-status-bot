@@ -1,5 +1,5 @@
 ﻿require("dotenv").config();
-const { Client, GatewayIntentBits } = require('discord.js'); // correct v14 import
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const axios = require('axios');
 
 const client = new Client({
@@ -46,7 +46,7 @@ function getStatusEmoji(presenceType) {
   switch (presenceType) {
     case 2: return "🟢"; // In game
     case 1: return "🟡"; // Online
-    default: return "🔴"; // Offline or studio
+    default: return "🔴"; // Offline
   }
 }
 
@@ -64,28 +64,46 @@ client.once("ready", async () => {
 
   const channel = await client.channels.fetch(CHANNEL_ID);
 
-  // Send initial message
-  let message = await channel.send("Loading...");
+  let message = await channel.send({ content: "Loading..." });
 
   setInterval(async () => {
     try {
       const data = await getPresence(users.map(u => u.id));
 
-      let text = "**Roblox Player Status**\n\n";
+      // Separate users by status
+      const inGame = [];
+      const online = [];
+      const offline = [];
 
       users.forEach(user => {
         const presence = data.find(p => p.userId === user.id);
         const emoji = presence ? getStatusEmoji(presence.userPresenceType) : "🔴";
 
-        text += `${emoji} **${user.name}**\n`;
+        const line = `**${user.name}** ${emoji}`;
+        if (emoji === "🟢") inGame.push(line);
+        else if (emoji === "🟡") online.push(line);
+        else offline.push(line);
       });
 
-      await message.edit(text);
+      const embed = new EmbedBuilder()
+        .setTitle("✨ **Roblox Player Tracker** ✨")
+        .setColor(0x1abc9c) // cyan
+        .setDescription("A live overview of player activity")
+        .addFields(
+          { name: "🟢 In Game", value: inGame.length ? inGame.join("\n") : "_No one in game_", inline: true },
+          { name: "🟡 Online", value: online.length ? online.join("\n") : "_No one online_", inline: true },
+          { name: "🔴 Offline", value: offline.length ? offline.join("\n") : "_Everyone offline_", inline: true }
+        )
+        .setFooter({ text: "Updated every 8 seconds | Roblox Status" })
+        .setTimestamp()
+        .setThumbnail("https://tr.rbxcdn.com/6c1f8473f2f1521c8834ef0b2f9f26a0/420/420/Image/Png"); // Roblox logo thumbnail
+
+      await message.edit({ embeds: [embed], content: "" });
 
     } catch (err) {
       console.error(err);
     }
-  }, 8000); // every 8 seconds
+  }, 8000);
 });
 
 client.login(TOKEN);
