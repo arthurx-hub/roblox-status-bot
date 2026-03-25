@@ -27,7 +27,6 @@ const TOKEN = process.env.TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 
 const users = [
-  { name: "romeosuperpro5", id: 7821756300 },
   { name: "Nuggetqveen", id: 2562511540 },
   { name: "luffy_jyz", id: 944709657 },
   { name: "roblox_user_9082847291", id: 9082847291 },
@@ -67,7 +66,6 @@ const users = [
   { name: "MARIANORASO01", id: 8885200414 },
   { name: "jairo_3528", id: 9873514388 },
   { name: "poitoket", id: 10256296579 },
-  { name: "VintageLotus47568", id: 10658594873 },
   { name: "andreaepaolo5642", id: 10555314969 },
   { name: "samuel1234y34", id: 9283590235 },
   { name: "benicio67245", id: 10434119204 },
