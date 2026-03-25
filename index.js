@@ -71,11 +71,6 @@ const users = [
   { name: "ClutchJooa", id: 9109392103 },
   { name: "Supermasonalexboy", id: 5550058054 },
   { name: "kagura_Gaming67", id: 10569651239 },
-  { name: "russellnoah5", id: 4947065346 },
-  { name: "Amartinezcastillo", id: 4239702511 },
-  { name: "mohamed896532", id: 2662290115 },
-  { name: "Toey_vip1", id: 9765970069 },
-  { name: "Salim666939", id: 10185177763 },
   { name: "Bozo_935", id: 5071134199 },
   { name: "Yre1qtt9", id: 8038104146 }
 ];
