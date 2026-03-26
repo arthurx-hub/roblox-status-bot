@@ -56,13 +56,10 @@ const users = [
   { name: "liver_939", id: 9811969478 },
   { name: "LOUISAUBRY4", id: 9697285028 },
   { name: "DangerMav27", id: 7803796544 },
-  { name: "hfjfjr624", id: 9470604262 },
   { name: "Xxmanis34", id: 9691462265 },
   { name: "alejandro378259", id: 8970131447 },
   { name: "Maribecerraok", id: 8094607204 },
-  { name: "MARIANORASO01", id: 8885200414 },
   { name: "jairo_3528", id: 9873514388 },
-  { name: "poitoket", id: 10256296579 },
   { name: "VintageLotus47568", id: 10658594873 },
   { name: "andreaepaolo5642", id: 10555314969 },
   { name: "samuel1234y34", id: 9283590235 },
@@ -75,7 +72,6 @@ const users = [
   { name: "Amartinezcastillo", id: 4239702511 },
   { name: "mohamed896532", id: 2662290115 },
   { name: "Toey_vip1", id: 9765970069 },
-  { name: "Salim666939", id: 10185177763 },
   { name: "Bozo_935", id: 5071134199 },
   { name: "Yre1qtt9", id: 8038104146 }
 ];
