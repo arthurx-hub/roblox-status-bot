@@ -20,10 +20,7 @@ const {
   StringSelectMenuBuilder
 } = require('discord.js');
 
-const ALLOWED_ROLE_IDS = [
-  "1485411945548091462", // first id
-  "1487580141122224299",  // second id
-];
+const ALLOWED_ROLE_ID = "1485411945548091462";
 
 let trackerInterval = null;
 let trackerMessage = null;
