@@ -20,7 +20,10 @@ const {
   StringSelectMenuBuilder
 } = require('discord.js');
 
-const ALLOWED_ROLE_ID = "1485411945548091462";
+const ALLOWED_ROLE_IDS = [
+  "1485411945548091462", // first id
+  "1487580141122224299",  // second id
+];
 
 let trackerInterval = null;
 let trackerMessage = null;
@@ -71,30 +74,7 @@ const users = [
   { name: "daviff_386", id: 8158572166 },
   { name: "manoa434", id: 4927925771 },
   { name: "Maribecerraok", id: 8094607204 },
-  { name: "MARIANORASO01", id: 8885200414 },
-  { name: "jairo_3528", id: 9873514388 },
-  { name: "poitoket", id: 10256296579 },
-  { name: "iliyabot8", id: 7845148931 },
-  { name: "andreaepaolo5642", id: 10555314969 },
-  { name: "samuel1234y34", id: 9283590235 },
-  { name: "benicio67245", id: 10434119204 },
-  { name: "Layana3782", id: 8391251442 },
-  { name: "ClutchJooa", id: 9109392103 },
-  { name: "Supermasonalexboy", id: 5550058054 },
-  { name: "CarterRay1715", id: 3106582512 },
-  { name: "santiago_1636", id: 3918546006 },
-  { name: "Amartinezcastillo", id: 4239702511 },
-  { name: "mohamed896532", id: 2662290115 },
-  { name: "Toey_vip1", id: 9765970069 },
-  { name: "alexpro183979", id: 8595000206 },
-  { name: "therealchicksxc_jr", id: 10408462040 },
-  { name: "lamvit2013", id: 8261959074 },
-  { name: "Gabipaltin", id: 5806220554 },
-  { name: "saulomiguel317", id: 7683952128 },
-  { name: "elenit_2", id: 5294416171 },
-  { name: "wld_19842", id: 10029012485 },
-  { name: "Bozo_935", id: 5071134199 },
-  { name: "Yre1qtt9", id: 8038104146 }
+  { name: "MARIANORASO01", id: 8885200414 }
 ];
 
 // Convert Roblox presence type to emoji
@@ -198,10 +178,13 @@ client.once("clientReady", async () => {
   }
 });
 
-client.on("messageCreate", async (msg) => {
-  if (msg.author.bot) return;
+const TARGET_CHANNEL_ID = process.env.CHANNEL_ID; // pull from environment
 
-  // Auto delete ALL messages after 2 sec
+client.on("messageCreate", async (msg) => {
+  if (msg.author.bot) return; // ignore bots
+  if (msg.channel.id !== TARGET_CHANNEL_ID) return; // ignore other channels
+
+  // Auto delete messages after 2 sec
   setTimeout(() => {
     msg.delete().catch(() => {});
   }, 2000);
@@ -217,7 +200,7 @@ client.on("messageCreate", async (msg) => {
   setTimeout(() => stopTracker(), minutes * 60000);
 
   msg.channel.send(`⏱ Tracker enabled for **${minutes} minutes**.`)
-    .then(m => setTimeout(() => m.delete().catch(()=>{}), 2000));
+    .then(m => setTimeout(() => m.delete().catch(() => {}), 2000));
 });
 
   const channel = await client.channels.fetch(CHANNEL_ID);
