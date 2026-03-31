@@ -37,42 +37,46 @@ const client = new Client({
 const TOKEN = process.env.TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 
-const users = [
-  { name: "romeosuperpro5", id: 7821756300 },
-  { name: "Nuggetqveen", id: 2562511540 },
-  { name: "luffy_jyz", id: 944709657 },
-  { name: "roblox_user_9082847291", id: 9082847291 },
-  { name: "bjhb8bhbn", id: 10196460993 },
-  { name: "Sammycomobebe", id: 9377292828 },
-  { name: "wilson25344", id: 8327647276 },
-  { name: "Shifa18155", id: 7691816319 },
-  { name: "neflix_ng", id: 7026037709 },
-  { name: "Dinonuggets4350", id: 8247838264 },
-  { name: "dragonglut", id: 1276964172 },
-  { name: "Alebrahaham1", id: 9954148601 },
-  { name: "Zxcvbnmaw6", id: 7886773252 },
-  { name: "iuuytuhyy", id: 8193096651 },
-  { name: "ale_isbest5", id: 9261884340 },
-  { name: "kdz3670", id: 10628478530 },
-  { name: "capotavtr1", id: 9970672870 },
-  { name: "rikunosuke0421", id: 10134931666 },
-  { name: "JosephP1906", id: 3906320056 },
-  { name: "proroo054", id: 9005073969 },
-  { name: "axstamado", id: 3946668632 },
-  { name: "jaidenepikk", id: 1214430122 },
-  { name: "koodafltrade", id: 1548337605 },
-  { name: "moneygun390", id: 4348724533 },
-  { name: "Kdhrbhegdgfgdg", id: 9936735208 },
-  { name: "Metzger2015", id: 2031159370 },
-  { name: "liver_939", id: 9811969478 },
-  { name: "LOUISAUBRY4", id: 9697285028 },
-  { name: "DangerMav27", id: 7803796544 },
-  { name: "Xxmanis34", id: 9691462265 },
-  { name: "daviff_386", id: 8158572166 },
-  { name: "manoa434", id: 4927925771 },
-  { name: "Maribecerraok", id: 8094607204 },
-  { name: "MARIANORASO01", id: 8885200414 }
-];
+const usernames = `
+Sr_Davi36
+JohnBoy5916
+Masoudabi6777
+RAMIRO996148
+bonitoff25
+chopi123937
+gg_dani088
+reidd2014
+lsihamLahessl
+lana_nouvelle
+srz_01234
+BRO99338
+RoboJero31
+Acekoala398
+Iamthenewkid804
+amirleg0at25
+SAM10120OX
+justinaybar2
+Vaughndadon00
+nathanme51
+Cooldog8966
+Pumbas12345673
+zqvrto
+Minions110614
+pruzir_2440
+Zen44464
+WouldYMissMe
+Danonino_pro57
+kuroneko_811
+Kiraund3
+49ersontop_2
+glggp6
+XxvictorxXrh
+Baltazar123238
+ikerhack_13
+carlospajin87438
+`.trim().split("\n");
+
+let users = []; // ⚠️ IMPORTANT keep this
 
 // Convert Roblox presence type to emoji
 function getStatusEmoji(presenceType) {
@@ -92,8 +96,23 @@ async function getPresence(userIds) {
   return response.data.userPresences;
 }
 
+async function getUserIdsFromNames(names) {
+  const res = await axios.post("https://users.roblox.com/v1/usernames/users", {
+    usernames: names,
+    excludeBannedUsers: false
+  });
+
+  return res.data.data.map(u => ({
+    name: u.name,
+    id: u.id
+  }));
+}
+
 client.once("clientReady", async () => { 
   console.log(`Logged in as ${client.user.tag}`);
+
+  users = await getUserIdsFromNames(usernames);
+  console.log(`Loaded ${users.length} users`);
 
   client.on("interactionCreate", async (interaction) => {
   if (!interaction.isButton() && !interaction.isStringSelectMenu()) return;
@@ -231,7 +250,7 @@ function startTracker() {
 
   trackerInterval = setInterval(async () => {
     try {
-      const data = await getPresence(users.map(u => u.id));
+      const data = await getAllPresence(users);
 
       let text = "**Roblox Player Logs**\n\n";
 
