@@ -58,6 +58,11 @@ carlospajin87438
 ikerhack_13
 xxvictorxxrhbaltazor
 Baltazar123238
+FGTeeV_Dude0
+M_VIDAD
+Neyzoxboxyou
+curum9001
+Benjamincc1105
 `.trim().split("\n");
 
 let users = []; // ⚠️ IMPORTANT keep this
