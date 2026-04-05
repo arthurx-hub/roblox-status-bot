@@ -38,31 +38,33 @@ const TOKEN = process.env.TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 
 const usernames = `
-milankn30
-iamthenewkid804
-Lucapucarelli
-editzm1951
-amirleg0at25
-sam10120ox
-Cooldog8966
-fyijnn
-pumbas12345673
-Grfgtfnnkhds
-minions110614
-caio120_12
-Danonino_pro57
-kuroneko_811
-kiraund3
-glggp6
-carlospajin87438
-ikerhack_13
-xxvictorxxrhbaltazor
-Baltazar123238
-FGTeeV_Dude0
-M_VIDAD
-Neyzoxboxyou
-curum9001
-Benjamincc1105
+lillyechry
+JDPQ924
+marshmellow25_14
+DylanBrian14
+yzvar_32
+Pepsiman79YT_7
+user_300508
+Mateo33_HD0
+Davicho_1308
+Mikayla111326
+PG244159
+oscar123h48
+JNJGDERCFT
+ffon_omar12
+Space_fan76543
+Hjzh11
+Felix24_7
+Willoubl
+676767yerico
+pizzaso965
+neymar568905je
+wjfkwhcijs
+smljeffysblbowser
+lilan1310546
+Jacub0385
+ROCKYx2021
+CGF_Ryan
 `.trim().split("\n");
 
 let users = []; // ⚠️ IMPORTANT keep this
