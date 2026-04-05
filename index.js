@@ -5,6 +5,8 @@ const axios = require('axios');
 const express = require("express");
 const app = express();
 
+console.log("ENV CHECK:", process.env);
+
 app.get("/", (req, res) => {
   res.send("Bot is alive");
 });
