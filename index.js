@@ -11,8 +11,10 @@ app.get("/", (req, res) => {
   res.send("Bot is alive");
 });
 
-app.listen(3000, () => {
-  console.log("Web server running");
+const PORT = process.env.PORT;
+
+app.listen(PORT, () => {
+  console.log("Web server running on port", PORT);
 });
 
 const {
